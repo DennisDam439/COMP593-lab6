@@ -3,7 +3,14 @@ import os
 import requests
 import sys 
 import tempfile 
-import urllib.parse import urlparse 
+
+import hashlib 
+import os 
+import requests
+import sys 
+import tempfile 
+
+from urllib.parse import urlparse
 
 
 downloadlink = "https://get.videolan.org/vlc/3.0.21/macosx/vlc-3.0.21-arm64.dmg"#htt
@@ -26,15 +33,103 @@ def verify_checksum(file_path, checsum):
             sha256.update(block)
     file_checksum = sha256.hexdigest()
     return file_checksum == checksum
-    
 
 
 
+def install_vlc(installer_path):
+    subprocess.run([installer_path, '/'] check=True)
 
-
-
+def delete_installer(install_path):
+    os.remove(install_path)
 def main():
+    temp_dir = tempfile.gettemdir()
+    filename = os.path.basename(urlparse(downlink).path)
+    path = os.path.join(temp_dir, filename)
+    download_file(downlink, path)
 
+    print ("Downloading!!!!")
+    download_file(downlink, path)
+
+    print("Veryfying checksum...")
+    if verify_checksum(path, checksum):
+    print("Checksum passed!")
+        install_vlc(path)
+        delete_installer(path)
+        print("VLC installed successfully!")
+    else print("Verification failed.")
+        print("VLC installation failed.")
+        sys.exit(1)
+
+
+
+if__name__=="main":
+    main()
+
+
+downloadlink = "https://get.videolan.org/vlc/3.0.21/macosx/vlc-3.0.21-arm64.dmg"#htt
+checksum =  "15dd65bf6489da9ec6a67f5585c74c40a58993acff41a82958a916dd74178044"
+
+
+def download_file(url,dest):
+    response = requests.get(url, stream=True)
+    response.raise_for_status()
+    with (dest, 'wb') as f:
+        for chunk in response.iter_content(chunk_size=8192):
+            f.write(chunk)
+    return dest 
+
+
+def verify_checksum(file_path, checsum):
+    sha256 = hashlib.sha256()
+    with open(file_path, 'rb') as f:
+        for block in inter(lambda: f.read(4096, b""):
+            sha256.update(block)
+    file_checksum = sha256.hexdigest()
+    return file_checksum == checksum
+
+
+
+def install_vlc(installer_path):
+    subprocess.run([installer_path, '/'] check=True)
+
+def delete_installer(install_path):
+    os.remove(install_path)
+def main():
+    temp_dir = tempfile.gettemdir()
+    filename = os.path.basename(urlparse(downlink).path)
+    path = os.path.join(temp_dir, filename)
+    download_file(downlink, path)
+
+    print ("Downloading!!!!")
+    download_file(downlink, path)
+
+    print("Veryfying checksum...")
+    if verify_checksum(path, checksum):
+    print("Checksum passed!")
+        install_vlc(path)
+        delete_installer(path)
+        print("VLC installed successfully!")
+    else print("Verification failed.")
+        print("VLC installation failed.")
+        sys.exit(1)
+
+
+
+if__name__=="main":
+    main()
+
+
+
+
+
+
+
+
+
+
+
+
+########steps used 
     # Get the expected SHA-256 hash value of the VLC installer
     expected_sha256 = get_expected_sha256()
 
@@ -123,6 +218,3 @@ def delete_installer(installer_path):
         installer_path (str): Full path of the VLC installer file
     """
     return
-
-if __name__ == '__main__':
-    main()
