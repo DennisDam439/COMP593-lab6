@@ -4,12 +4,6 @@ import requests
 import sys 
 import tempfile 
 
-import hashlib 
-import os 
-import requests
-import sys 
-import tempfile 
-
 from urllib.parse import urlparse
 
 
