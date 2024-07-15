@@ -23,7 +23,7 @@ def download_file(url,dest):
 def verify_checksum(file_path, checsum):
     sha256 = hashlib.sha256()
     with open(file_path, 'rb') as f:
-        for block in inter(lambda: f.read(4096, b""):
+        for block in iter(lambda: f.read(4096, b""),
             sha256.update(block)
     file_checksum = sha256.hexdigest()
     return file_checksum == checksum
