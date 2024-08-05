@@ -87,6 +87,5 @@ def delete_installer(installer_path):
         print(f"Error occurred while deleting the installer: {e}")
 
 if __name__ == "__main__":
-
     main()
 
