@@ -7,7 +7,6 @@ import subprocess
 from urllib.parse import urlparse
 
 
-
 installer_url = "https://get.videolan.org/vlc/3.0.21/win64/vlc-3.0.21-win64.exe"
 sha256_url = "https://get.videolan.org/vlc/3.0.21/win64/vlc-3.0.21-win64.exe.sha256"
 
